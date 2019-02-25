@@ -1,17 +1,17 @@
-document.addEventListener("DOMContentLoaded", function (event) {
+document.addEventListener("DOMContentLoaded", function () {
 
-    var window = document.querySelector(".start");
-    var main = document.querySelector(".main");
-    var start = document.querySelector("#ready");
-    var again = document.querySelector("#again");
+    const startingWindow = document.querySelector(".start");
+    const main = document.querySelector(".main");
+    const start = document.querySelector("#ready");
+    const playAgain = document.querySelector("#again");
 
 
-    var startgame =  function () {
+    const runGame =  function () {
 
         if (document.querySelector(".meat") !== null){
             document.querySelector(".meat").classList.remove("meat");
         }
-        window.classList.add("invisible");
+        startingWindow.classList.add("invisible");
         main.classList.remove("invisible");
 
 
@@ -26,13 +26,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
             this.y = Math.floor(Math.random() * 10);
         };
 
-        var Game = function () {
-            var self = this;
+        const Game = function () {
+            const self = this;
             this.board =document.querySelectorAll('#board div');
             this.wolf=new Wolf();
             this.meat=new Meat();
             this.score = 0;
-            var scoreValue = document.querySelector("#score strong");
+            const scoreValue = document.querySelector("#score strong");
 
 
             this.index = function (x, y) {
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     this.hideVisibleWolf();
                 }
 
-                var showWolfOnBoard = this.board[this.index(this.wolf.x, this.wolf.y)];
+                const showWolfOnBoard = this.board[this.index(this.wolf.x, this.wolf.y)];
 
                 if (showWolfOnBoard !== undefined) {
                     showWolfOnBoard.classList.add('wolf');
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
             };
 
             this.hideVisibleWolf = function () {
-                var visible = document.querySelector('.wolf');
+                const visible = document.querySelector('.wolf');
                 if (visible) {
                     visible.classList.remove('wolf')}
             };
@@ -129,16 +129,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
         };
 
-        var game = new Game();
+        const game = new Game();
         game.showWolf();
         game.showMeat();
         game.startGame();
 
     };
 
-    start.addEventListener("click", startgame);
-    again.addEventListener("click", startgame);
-    again.addEventListener("click", function (){
+    start.addEventListener("click", runGame);
+    playAgain.addEventListener("click", runGame);
+    playAgain.addEventListener("click", function (){
         document.getElementById("over").classList.add("invisible");
     });
 
