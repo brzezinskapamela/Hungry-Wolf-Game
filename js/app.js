@@ -1,124 +1,146 @@
-//Wolf
-function Wolf (x,y, direction) {
-    this.x = 0;
-    this.y = 0;
-    this.direction = 'right';
-};
+document.addEventListener("DOMContentLoaded", function (event) {
 
-//Meat
-function Meat (x,y) {
-    this.x = Math.floor(Math.random() * 10);
-    this.y = Math.floor(Math.random() * 10);
-};
-
-//Game
-function Game () {
-    var self = this;
-    this.board =document.querySelectorAll('#board div');
-    this.wolf=new Wolf();
-    this.meat=new Meat();
-    this.score = 0;
-    var scoreValue = document.querySelector("#score strong");
+    var window = document.querySelector(".start");
+    var main = document.querySelector(".main");
+    var start = document.querySelector("#ready");
+    var again = document.querySelector("#again");
 
 
-    //starting game
-    this.startGame = function () {
-        this.idSetInterval = setInterval(function () {
-            self.moveWolf();
-        }, 300);
-    }
+    var startgame =  function () {
 
-    //setting of position.
-    this.position = function(x,y) {
-        return x + (y * 10);
-    };
-
-    // rendering Wolf
-    this.showWolf = function() {
-        this.hideVisibleWolf();
-        this.board[this.position(this.wolf.x, this.wolf.y)].classList.add('wolf');
-    };
-
-    // hiding last position Wolf
-    this.hideVisibleWolf = function () {
-        var visible = document.querySelector('.wolf');
-        if (visible) {
-            visible.classList.remove('wolf')}
-    };
-
-    // rendering meat
-    this.showMeat = function () {
-        this.board[this.position(this.meat.x, this.meat.y)].classList.add('meat');
-    };
+        if (document.querySelector(".meat") !== null){
+            document.querySelector(".meat").classList.remove("meat");
+        }
+        window.classList.add("invisible");
+        main.classList.remove("invisible");
 
 
-    //moving Wolf
-    this.moveWolf = function () {
-        if (self.wolf.direction === 'right') {
-            self.wolf.x = self.wolf.x + 1;
-        } else if (self.wolf.direction === 'left') {
-            self.wolf.x = self.wolf.x - 1;
-        }  else if (self.wolf.direction === 'up') {
-            self.wolf.y = self.wolf.y - 1;
-        } else if(self.wolf.direction === 'down') {
-            self.wolf.y = self.wolf.y + 1;
+        function Wolf (x,y, direction) {
+            this.x = 0;
+            this.y = 0;
+            this.direction = 'right';
         };
-        self.gameOver ();
-        self.showWolf();
-        self.checkMeatCollision ();
+
+        function Meat (x,y) {
+            this.x = Math.floor(Math.random() * 10);
+            this.y = Math.floor(Math.random() * 10);
+        };
+
+        var Game = function () {
+            var self = this;
+            this.board =document.querySelectorAll('#board div');
+            this.wolf=new Wolf();
+            this.meat=new Meat();
+            this.score = 0;
+            var scoreValue = document.querySelector("#score strong");
+
+
+            this.index = function (x, y) {
+                return x + (y * 10);
+            };
+
+            this.showWolf = function () {
+
+                if (document.querySelector(".wolf") != null) {
+                    this.hideVisibleWolf();
+                }
+
+                var showWolfOnBoard = this.board[this.index(this.wolf.x, this.wolf.y)];
+
+                if (showWolfOnBoard !== undefined) {
+                    showWolfOnBoard.classList.add('wolf');
+                }
+            };
+
+            this.showMeat = function () {
+                this.board[this.index(this.meat.x, this.meat.y)].classList.add("meat");
+            };
+
+
+            this.startGame = function () {
+                this.idSetInterval = setInterval(function () {
+                    self.moveWolf();
+                }, 300);
+            };
+
+            this.moveWolf = function () {
+                if (this.wolf.direction === "right") {
+                    this.wolf.x = this.wolf.x + 1;
+                } else if (this.wolf.direction === "left") {
+                    this.wolf.x = this.wolf.x - 1;
+                } else if (this.wolf.direction === "top") {
+                    this.wolf.y = this.wolf.y - 1;
+                } else if (this.wolf.direction === "bottom") {
+                    this.wolf.y = this.wolf.y + 1;
+                }
+                this.showWolf();
+                this.checkMeatCollision();
+                this.gameOver();
+            };
+
+            this.hideVisibleWolf = function () {
+                var visible = document.querySelector('.wolf');
+                if (visible) {
+                    visible.classList.remove('wolf')}
+            };
+
+            this.turnWolf = function (event) {
+
+                switch (event.which) {
+                    case 37:
+                        this.wolf.direction = "left";
+                        break;
+                    case 38:
+                        this.wolf.direction = "top";
+                        break;
+                    case 39:
+                        this.wolf.direction = "right";
+                        break;
+                    case 40:
+                        this.wolf.direction = "bottom";
+                        break;
+                }
+
+            };
+
+            document.addEventListener("keydown", function (event) {
+                self.turnWolf(event);
+            });
+
+            this.checkMeatCollision = function() {
+                if (this.meat.x === this.wolf.x && this.meat.y===this.wolf.y) {
+                    document.querySelector(".meat").classList.remove("meat");
+                    this.score ++;
+                    scoreValue.innerText = this.score;
+                    this.meat=new Meat();
+                    this.showMeat();
+                }
+            };
+
+            this.gameOver = function () {
+                if (this.wolf.x < 0 || this.wolf.x > 9 || this.wolf.y < 0 || this.wolf.y > 9) {
+                    document.getElementById("over").classList.remove("invisible");
+                    if (document.querySelector(".wolf") !== null) {
+                        document.querySelector(".wolf").classList.remove("wolf");
+                    }
+                    document.getElementById("finalScore").innerHTML = document.querySelector("strong").innerHTML;
+                    return clearInterval(this.idSetInterval);
+                }
+            }
+        };
+
+        var game = new Game();
+        game.showWolf();
+        game.showMeat();
+        game.startGame();
+
     };
 
-    // changing direction by pressing keyboard
-
-
-    document.addEventListener('keydown', function(event) {
-        self.turnWolf(event);
+    start.addEventListener("click", startgame);
+    again.addEventListener("click", startgame);
+    again.addEventListener("click", function (){
+        document.getElementById("over").classList.add("invisible");
     });
 
 
-    this.turnWolf= function(event) {
-        switch (event.which) {
-            case 37:
-                self.wolf.direction = 'left';
-                break;
-            case 39:
-                self.wolf.direction = 'right';
-                break;
-            case 38:
-                self.wolf.direction = 'up';
-                break;
-            case 40:
-                self.wolf.direction = 'down';
-                break;
-        };
-    };
-
-
-
-    //score
-    this.checkMeatCollision = function() {
-        if (this.meat.x === this.wolf.x && this.meat.y===this.wolf.y) {
-            this.board[this.position(this.meat.x, this.meat.y)].classList.remove('meat');
-            this.score +=1;
-            scoreValue.innerText = this.score;
-            this.meat=new Meat();
-            this.showMeat();
-        }
-    }
-    //game over
-    this.gameOver = function () {
-        if (this.wolf.x < 0 ||  this.wolf.x > 9 || this.wolf.y < 0 || this.wolf.y > 9) {
-            clearInterval(this.idSetInterval)
-            this.hideVisibleWolf ();
-            alert('Game over! You scored ' + this.score + ' points.');
-            console.log("GAME OVER!");
-
-        }
-    }
-}
-
-var game = new Game();
-game.showMeat();
-game.showWolf();
-game.startGame();
-document.addEventListener('keydown', game.turnWolf);
+});
