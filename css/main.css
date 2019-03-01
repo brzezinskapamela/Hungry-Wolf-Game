@@ -17,75 +17,75 @@ body {
 .start{
     width: 100vh;
     height: 100vh;
+    padding-top: 150px;
 }
 
 .start p{
-    font-size: 4rem;
+    font-size: 5rem;
     color: white;
     text-align: center;
 }
 
 .start p:nth-of-type(2),
 .start p:nth-of-type(3) {
-    font-size: 2rem;
+    font-size: 2.5rem;
 }
 
 .arrows {
     background: url("../images/arrows.png") no-repeat;
     background-size: contain;
-    width: 200px;
-    height: 200px;
+    width: 300px;
+    height: 300px;
     margin: 0 auto;
 }
 
 #ready{
     border: 1px solid transparent;
-    width: 300px;
+    width: 350px;
     text-align: center;
     padding: 10px;
     margin: 50px auto;
     border-radius: 20px;
-    font-size: 30px;
+    font-size: 35px;
     background-color: darkred;
     cursor: pointer;
 }
 
 #ready:hover{
-    font-size: 40px;
-    width: 320px;
+    font-size: 45px;
+    width: 380px;
 }
 .main{
     height: 90vh;
 }
 
-section#score {
+#score {
     width: 100%;
 }
 
 #board {
-    max-width: 640px;
-    max-height: 640px;
+    max-width: 650px;
+    max-height: 650px;
     margin: 1em auto;
 }
 
 #board  > div {
     border: 1px solid white;
     float: left;
-    width: 64px;
-    height: 64px;
+    width: 65px;
+    height: 65px;
 }
 
 
-section#score div {
-    width: 10em;
-    height: 4em;
+#score div {
+    width: 5em;
+    height: 3em;
     text-align: center;
-    padding: 0.5em;
+    border: 0.5px solid white;
     background-color: rgba(211,211,211, 0.75);
-    border: 1px solid lightgray;
-    border-radius: 1px;
-    box-shadow: 1px 1px 5px 1px lightgray;
     margin: 1em auto;
+    font-size: 1.5rem;
+
 }
 
 .wolf {
@@ -99,7 +99,7 @@ section#score div {
     background-size: cover;
 }
 
-section#over {
+#over {
     position: fixed;
     width: 100%;
     height: 100%;
@@ -109,10 +109,10 @@ section#over {
     padding: 10px;
     background-color: rgba(255, 255, 255, 0.9);
     text-align: center;
-    font-size: 50px;
+    font-size: 55px;
 }
 
-section#over pre {
+#over pre {
     display: inline-block;
     width: 100%;
     text-align: center;
@@ -120,27 +120,32 @@ section#over pre {
     font-weight: bolder;
     color: darkred;
 }
+
+#finalScore {
+    color: darkred;
+    font-size: 65px;
+}
+
 #again{
     border: 1px solid transparent;
-    width: 300px;
+    width: 350px;
     text-align: center;
     padding: 10px;
     margin: 50px auto;
     border-radius: 20px;
-    font-size: 30px;
+    font-size: 35px;
     color: black;
     background-color: darkred;
     cursor: pointer;
 }
 
 #again:hover{
-    font-size: 35px;
-    width: 350px;
+    font-size: 45px;
+    width: 380px;
 }
 .wolf2{
     background: url("../images/wolf2.png") no-repeat center;
     height: 500px;
-
 }
 .invisible {
     display: none;
